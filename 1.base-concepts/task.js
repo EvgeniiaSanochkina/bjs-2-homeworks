@@ -21,30 +21,35 @@ function solveEquation(a, b, c) {
 }
 
 "use strict";
+let today = new Date();
+
+function monthDiff(today, date) {
+    return date.getMonth() - today.getMonth() + (12 * (date.getFullYear() - today.getFullYear()))
+};
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
     let totalAmount;
-    if (typeof percent != "string" || percent != "number") {
-        console.log("Параметр percent содержит неправильное значение percent")
+    if (isNaN(parseFloat(percent)) && typeof percent != "number") {
+        return 'Параметр "Процентная ставка" содержит неправильное значение "' + percent + '"'
     };
-    if (typeof contribution != "string" || contribution != "number") {
-        console.log("Параметр contribution содержит неправильное значение contribution")
+    if (isNaN(parseFloat(contribution)) && typeof contribution != "number") {
+        return 'Параметр "Начальный взнос" содержит неправильное значение "' + contribution + '"'
     };
-    if (typeof amount != "string" || amount != "number") {
-        console.log("Параметр amount содержит неправильное значение amount")
+    if (isNaN(parseFloat(amount)) && typeof amount != "number") {
+        return 'Параметр "Общая стоимость" содержит неправильное значение "' + amount + '"'
     };
     if (typeof date != "object") {
-        console.log("Параметр date содержит неправильное значение date")
+        return 'Параметр "Дата" содержит неправильное значение "' + date + '"'
     };
     let loanBody = amount - contribution;
-    //сюда срок кредита 
-    let period;
-    let monthlyPercent = (percent / 12) / 100;
-    let monthlyPayment = loanBody * (monthlyPercent + (monthlyPercent / (Math.pow((1 + monthlyPercent), n) - 1)));
-    let totalAmount = monthlyPayment * period;
-    totalAmount.toFixed(2);
 
-    // код для задачи №2 писать здесь
+    let period = monthDiff();
+    let monthlyPercent = (percent / 12) / 100;
+    let monthlyPayment = loanBody * (monthlyPercent + (monthlyPercent / (Math.pow((1 + monthlyPercent), period) - 1)));
+    totalAmount = monthlyPayment * period;
+    totalAmount = Number(totalAmount.toFixed(2));
+
+    // код для задачи №2 писать здесьs
 
     return totalAmount;
 }
