@@ -43,7 +43,7 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
     };
     let loanBody = amount - contribution;
 
-    let period = monthDiff();
+    let period = monthDiff(today, date);
     let monthlyPercent = (percent / 12) / 100;
     let monthlyPayment = loanBody * (monthlyPercent + (monthlyPercent / (Math.pow((1 + monthlyPercent), period) - 1)));
     totalAmount = monthlyPayment * period;
