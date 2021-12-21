@@ -25,16 +25,16 @@ function worker(arr) {
     return sum;
 }
 
-function makeWork(arrOfArr, worker) {
+function makeWork(arrOfArr, func) {
     // console.log(arrOfArr);
     let max = -Infinity;
     for (k = 0; k < arrOfArr.length; k++) {
-        max = Math.max(max, worker(arrOfArr[k]));
+        max = Math.max(max, func(arrOfArr[k]));
 
     }
     return max;
 }
-makeWork(arrOfArr, worker);
+//makeWork(arrOfArr, worker);
 
 // Задание 3
 
@@ -48,12 +48,3 @@ function worker2(arr) {
     let dif = Math.abs(maxOfArr - minOfArr);
     return dif;
 }
-
-function makeWork(arrOfArr) {
-    max = -Infinity;
-    for (k = 0; k < arrOfArr.length; k++) {
-        max = Math.max(max, worker2(arrOfArr[k]));
-    }
-    return max;
-}
-makeWork(arrOfArr, worker2);
