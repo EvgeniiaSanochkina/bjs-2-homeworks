@@ -6,6 +6,6 @@ function compareArrays(arr1, arr2) {
 }
 
 function advancedFilter(arr) {
-    let resultArr = arr.filter(isEvenAndMultiple = (num) => num > 0 && num % 3 === 0).map((num) => num * 10);
+    let resultArr = arr.filter(isPosAndMultiple = (num) => num > 0 && num % 3 === 0).map((num) => num * 10);
     return resultArr; // array
 }
