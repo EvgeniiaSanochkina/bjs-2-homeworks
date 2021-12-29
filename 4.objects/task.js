@@ -5,15 +5,10 @@ function Student(name, gender, age) {
     console.log("name: " + name + "; gender: " + gender + "; age: " + age)
 }
 
-let student1 = new Student("Vova", "male", "18")
-
-
 Student.prototype.setSubject = function(subjectName) {
     this.subject = subjectName;
     console.log("subject: " + subjectName)
 }
-
-student1.setSubject("Math");
 
 Student.prototype.addMark = function(mark) {
 
@@ -21,16 +16,29 @@ Student.prototype.addMark = function(mark) {
         this.marks = [mark];
 
     } else {
-        this.marks = this.marks.push(mark);
+        this.marks.push(mark);
     }
     console.log("marks: " + this.marks)
 }
 
-student1.addMark("10");
-student1.addMark("3")
-
-Student.prototype.addMarks = function(...mark) {
-    console.log("marks: " + mark)
+Student.prototype.addMarks = function(...marks) {
+    for (let mark of marks) {
+        this.addMark(mark);
+    }
 }
 
-student1.addMarks("2", "3", "5")
+Student.prototype.getAverage = function(marks) {
+    let sum = 0;
+    let avg = 0;
+    for (let i = 0; i < this.marks.length; i++) {
+        sum += Number(this.marks[i]);
+    }
+    avg = sum / this.marks.length;
+    return avg;
+}
+
+Student.prototype.exclude = function(reason) {
+    delete this.subject;
+    delete this.marks;
+    this.excluded = reason;
+}
