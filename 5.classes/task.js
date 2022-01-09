@@ -80,6 +80,10 @@ class Library extends PrintEditionItem {
     }
 
     findBookBy(type, value) {
-
+        for (let i = 0; i < this.books.length; i++) {
+            if (this.books[i] = value) {
+                return this.name;
+            }
+        }
     }
 }
