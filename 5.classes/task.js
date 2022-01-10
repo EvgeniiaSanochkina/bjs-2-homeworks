@@ -89,18 +89,43 @@ class Library extends PrintEditionItem {
     }
 
     giveBookByName(bookName) {
-        for (let i = 0; i < this.books.length; i++) {
-            if (this.findBookBy([хуйняизподконя]).name == bookName) {
-                return this.books.splice(i, 1);
+        for (let book of this.books) {
+            if (book.name === bookName) {
+                return this.books.splice(book, 1)[0];
             }
         }
         return null;
-
-        //for (let i = 0; i < this.books.length; i++) {
-        // if (this.books[i].name == bookName) {
-        //  return this.books.splice(i, 1);
-        // }
-        // }
-        //return null;
     }
+}
+
+class Student {
+    constructor(name) {
+        this.name = name;
+        this.marks = [];
+    }
+
+    addMark(mark, subject) {
+        this.marks.push(subject)
+        if (this.marks === undefined) {
+            this.marks = [mark];
+
+        } else {
+            this.marks.push(mark);
+        }
+    }
+
+    getAverageBySubject(subject) {
+        if (this.subject = true) {
+            let sum = 0;
+            let avg = 0;
+            for (let i = 0; i < this.marks.length; i++) {
+                sum += Number(this.marks[i]);
+            }
+            avg = sum / this.marks.length;
+            console.log("Средний балл по предмету " + subject + " " + avg)
+        } else {
+            console.log("Несуществующий предмет")
+        }
+    }
+
 }
