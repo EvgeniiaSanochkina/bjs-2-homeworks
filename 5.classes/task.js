@@ -105,27 +105,36 @@ class Student {
     }
 
     addMark(mark, subject) {
-        this.marks.push(subject)
-        if (this.marks === undefined) {
-            this.marks = [mark];
-
-        } else {
-            this.marks.push(mark);
-        }
+        this.marks.push({
+            [subject]: mark
+        });
     }
 
     getAverageBySubject(subject) {
-        if (this.subject = true) {
-            let sum = 0;
-            let avg = 0;
-            for (let i = 0; i < this.marks.length; i++) {
-                sum += Number(this.marks[i]);
+        let sum = 0;
+        let avg = 0;
+        let count = 0;
+        for (let mark of this.marks) {
+            if (mark[subject] !== undefined) {
+                sum += mark[subject];
+                count++;
             }
-            avg = sum / this.marks.length;
-            console.log("Средний балл по предмету " + subject + " " + avg)
-        } else {
-            console.log("Несуществующий предмет")
         }
+        if (count > 0) {
+            avg = sum / count;
+        }
+        return avg;
     }
 
+    getAverage() {
+        let sum = 0;
+        let avg = 0;
+
+        for (let mark of this.marks) {
+            sum += Object.values(mark)[0];
+
+        }
+        avg = sum / this.marks.length;
+        return avg;
+    }
 }
