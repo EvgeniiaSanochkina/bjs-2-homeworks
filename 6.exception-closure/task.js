@@ -12,9 +12,10 @@ function validateCount(x, base) {
         parseCount(x, base);
         return parseCount(x, base);
     } catch (e) {
-        let message = new Error("Невалидное значение");
-        return message;
+
+        return e;
     }
+
 
 }
 
