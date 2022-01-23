@@ -9,19 +9,17 @@ class PrintEditionItem {
 
     fix() {
         this.state = this.state * 1.5;
-        if (this.state > 100) {
-            this.state = 100;
-        }
+
     }
 
     set state(number) {
         if (number < 0) {
             this._state = 0;
-        }
+        } else
         if (number > 100) {
             this._state = 100;
-        }
-        this._state = number;
+        } else
+            this._state = number;
     }
     get state() {
         return this._state;
@@ -103,9 +101,11 @@ class Student {
     }
 
     addMark(mark, subject) {
-        this.marks.push({
-            [subject]: mark
-        });
+        if (mark >= 1 && 5 >= mark) {
+            this.marks.push({
+                [subject]: mark
+            });
+        }
     }
 
     getAverageBySubject(subject) {
