@@ -10,15 +10,15 @@ function cachingDecoratorNew(func) {
         if (idx !== -1) {
             console.log("Из кэша: " + cache[idx].value);
             return "Из кэша: " + cache[idx].value;
-        } else {
-            let value = func(...args);
-            cache.push({ hash, value });
-            if (cache.length > 5) {
-                cache.shift();
-            }
-            console.log("Вычисляем: " + value);
-            return "Вычисляем: " + value;
         }
+        let value = func(...args);
+        cache.push({ hash, value });
+        if (cache.length > 5) {
+            cache.shift();
+        }
+        console.log("Вычисляем: " + value);
+        return "Вычисляем: " + value;
+
 
     }
     return wrapper;
