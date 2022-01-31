@@ -26,10 +26,34 @@ function cachingDecoratorNew(func) {
 }
 
 
-function debounceDecoratorNew(func) {
-    // Ваш код
+function debounceDecoratorNew(func, ms) {
+    let flag = false;
+    let intervalId;
+    return function wrapper(...args) {
+        let result = flag ? undefined : func(); // if (flag == true) {undefined} else {func()}
+        flag = true;
+        clearInterval(intervalId);
+        intervalId = setTimeout(() => {
+            flag = false;
+        }, ms)
+        return result;
+    }
 }
 
-function debounceDecorator2(func) {
-    // Ваш код
+function debounceDecorator2(func, ms) {
+    let flag = false;
+    let intervalId;
+    let count = 0;
+    return function wrapper(...args) {
+        let result = flag ? undefined : func();
+        count++;
+        flag = true;
+        clearInterval(intervalId);
+        intervalId = setTimeout(() => {
+            flag = false;
+            count++;
+        }, ms)
+        return result;
+    }
+
 }
