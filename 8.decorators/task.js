@@ -27,33 +27,45 @@ function cachingDecoratorNew(func) {
 
 
 function debounceDecoratorNew(func, ms) {
-    let flag = false;
     let intervalId;
-    return function wrapper(...args) {
-        let result = flag ? undefined : func(); // if (flag == true) {undefined} else {func()}
-        flag = true;
+    let flag;
+
+    return function(...args) {
+
         clearInterval(intervalId);
         intervalId = setTimeout(() => {
-            flag = false;
+            func(...args);
+            let flag = false;
         }, ms)
-        return result;
+
+        if (!flag) {
+            flag = true;
+            func(...args);
+        }
     }
 }
 
+
+
+
+
 function debounceDecorator2(func, ms) {
-    let flag = false;
-    let intervalId;
     let count = 0;
-    return function wrapper(...args) {
-        let result = flag ? undefined : func();
-        count++;
-        flag = true;
+    let history = [];
+    let intervalId;
+
+    return function(...args) {
+
         clearInterval(intervalId);
         intervalId = setTimeout(() => {
-            flag = false;
-            count++;
+            func(...args);
+            let flag = false;
         }, ms)
-        return result;
-    }
 
+        if (!flag) {
+            flag = true;
+            func(...args);
+            history.push(count++)
+        }
+    }
 }
