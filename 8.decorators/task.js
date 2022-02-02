@@ -35,7 +35,6 @@ function debounceDecoratorNew(func, ms) {
         clearInterval(intervalId);
         intervalId = setTimeout(() => {
             func(...args);
-            let flag = false;
         }, ms)
 
         if (!flag) {
@@ -59,7 +58,6 @@ function debounceDecorator2(func, ms) {
         clearInterval(intervalId);
         intervalId = setTimeout(() => {
             func(...args);
-            let flag = false;
         }, ms)
 
         if (!flag) {
