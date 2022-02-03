@@ -28,42 +28,30 @@ function cachingDecoratorNew(func) {
 
 function debounceDecoratorNew(func, ms) {
     let intervalId;
-    let flag;
 
-    return function(...args) {
-
+    function wrapper(...args) {
+        const fnCall = () => { func.apply(this, ...args) };
         clearInterval(intervalId);
-        intervalId = setTimeout(() => {
-            func(...args);
-        }, ms)
-
-        if (!flag) {
-            flag = true;
-            func(...args);
-        }
+        intervalId = setTimeout(fnCall, ms)
     }
+    return wrapper;
 }
 
 
 
 
 
+
 function debounceDecorator2(func, ms) {
-    let count = 0;
-    let history = [];
     let intervalId;
+    wrapper.count = 0;
 
-    return function(...args) {
-
+    function wrapper(...args) {
+        const fnCall = () => { func.apply(this, ...args) };
+        wrapper.count++;
         clearInterval(intervalId);
-        intervalId = setTimeout(() => {
-            func(...args);
-        }, ms)
-
-        if (!flag) {
-            flag = true;
-            func(...args);
-            history.push(count++)
-        }
+        intervalId = setTimeout(fnCall, ms)
     }
+    return wrapper;
+
 }
