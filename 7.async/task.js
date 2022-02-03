@@ -1,23 +1,25 @@
 class AlarmClock {
     constructor(alarmCollection, timerId) {
         this.alarmCollection = [];
-        this.timerId = timerId;
+        this.timerId = null;
     }
-    addClock(time, callback, id) {
+    addClock(time, func, id) {
         if (id === undefined) {
-            let message = new Error("ошибочка");
+            let message = new Error("id неизвестен");
             throw message;
         }
-        for (id of this.alarmCollection) {
-            if (this.alarmCollection.includes(id, 0) === true) {
-                console.error();
-            }
+        if (this.alarmCollection.some(elem => elem.id === id)) {
+            console.error("такой id уже есть");
         }
+
+
         this.alarmCollection.push({
-            [time]: time,
-            [callback]: callback,
-            [id]: id
+            time: time,
+            func: func,
+            id: id
         });
+
+
     }
     removeClock(id) {
         let initialLength = this.alarmCollection.length;
@@ -36,9 +38,49 @@ class AlarmClock {
     }
 
     start() {
-        checkClock()
+        let checkClock = (alarm) => {
+            if (this.getCurrentFormattedTime() === alarm.time) {
+                func();
+            }
+        }
 
-
+        if (this.timerId === null) {
+            this.timerId = setInterval(() => this.alarmCollection.forEach(checkClock), 3000);
+        }
 
     }
+
+    stop() {
+        if (this.timerId != null) {
+            clearInterval(this.timerId);
+            this.timerId = null;
+        }
+    }
+
+    printAlarms() {
+        this.alarmCollection.forEach(element => console.log(`Будильник №${element.id} установлен на ${element.time}`));
+    }
+
+    clearAlarms() {
+        this.stop();
+        this.alarmCollection = [];
+    }
+}
+
+function testCase() {
+    let newAlarm = new AlarmClock;
+    newAlarm.addClock("00:00", () => console.log("Вставать"), 1);
+    newAlarm.addClock("00:01", () => {
+        console.log("Срочно вставать!");
+        newAlarm.removeClock(2)
+    }, 2);
+    newAlarm.addClock("00:02", () => {
+        console.log("Очень срочно вставать!");
+        newAlarm.stop();
+        newAlarm.clearAlarms();
+        newAlarm.printAlarms();
+    }, 3);
+
+    newAlarm.printAlarms();
+    newAlarm.start();
 }
