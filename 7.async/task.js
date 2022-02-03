@@ -5,28 +5,30 @@ class AlarmClock {
     }
     addClock(time, func, id) {
         if (id === undefined) {
-            let message = new Error("id неизвестен");
-            throw message;
+            throw new Error("id неизвестен");
+
         }
         if (this.alarmCollection.some(elem => elem.id === id)) {
             console.error("такой id уже есть");
+        } else {
+            this.alarmCollection.push({
+                time: time,
+                func: func,
+                id: id
+            });
         }
-
-
-        this.alarmCollection.push({
-            time: time,
-            func: func,
-            id: id
-        });
-
 
     }
     removeClock(id) {
         let initialLength = this.alarmCollection.length;
-        let newArr = this.alarmCollection.filter(item => this.alarmCollection.id == 1);
-        if (initialLength != newArr.length) {
-            this.alarmCollection = newArr;
-        }
+        let removed = this.alarmCollection.find(item => item.id === id);
+        this.alarmCollection.splice(removed, 1);
+        let newLength = this.alarmCollection.length;
+        return (initialLength > newLength);
+        //let newArr = this.alarmCollection.filter(item => this.alarmCollection.id == 1);
+        //if (initialLength != newArr.length) {
+        //  this.alarmCollection = newArr;
+        // }
     }
     getCurrentFormattedTime() {
         let currentDate = new Date();
@@ -40,7 +42,7 @@ class AlarmClock {
     start() {
         let checkClock = (alarm) => {
             if (this.getCurrentFormattedTime() === alarm.time) {
-                func();
+                return alarm.func();
             }
         }
 
@@ -58,7 +60,7 @@ class AlarmClock {
     }
 
     printAlarms() {
-        this.alarmCollection.forEach(element => console.log(`Будильник №${element.id} установлен на ${element.time}`));
+        this.alarmCollection.forEach((item, idx) => console.log("Будильник № " + this.alarmCollection[idx].id + " установлен на " + this.alarmCollection[idx].time));
     }
 
     clearAlarms() {
