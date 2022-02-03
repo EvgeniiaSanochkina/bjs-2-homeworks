@@ -28,11 +28,18 @@ function cachingDecoratorNew(func) {
 
 function debounceDecoratorNew(func, ms) {
     let intervalId;
+    let flag = false;
 
     function wrapper(...args) {
-        const fnCall = () => { func.apply(this, ...args) };
-        clearInterval(intervalId);
-        intervalId = setTimeout(fnCall, ms)
+
+        clearInterval(intervalId); //"Вам нужно сначала сбросить текущий таймаут"
+
+        intervalId = setTimeout(func, ms); //"затем создать новый (чтобы спустя время функция вызывалась) "
+
+        if (!flag) { // "и только после этих действий проверять флаг: если он опущен, то синхронно вызывать полученную функцию."
+            flag = true;
+            func.apply(this, ...args);
+        }
     }
     return wrapper;
 }
@@ -47,10 +54,14 @@ function debounceDecorator2(func, ms) {
     wrapper.count = 0;
 
     function wrapper(...args) {
-        const fnCall = () => { func.apply(this, ...args) };
-        wrapper.count++;
+
         clearInterval(intervalId);
-        intervalId = setTimeout(fnCall, ms)
+        intervalId = setTimeout(func, ms);
+        if (!flag) {
+            flag = true;
+            func.apply(this, ...args);
+        }
+        wrapper.count++;
     }
     return wrapper;
 
